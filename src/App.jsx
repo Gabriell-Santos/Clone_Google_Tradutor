@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const language = [
   { code: "en", name: "Inglês" },
   { code: "de", name: "Alemão" },
+  { code: "es", name: "Espanha" },
   { code: "fr", name: "Francês" },
   { code: "it", name: "Italiano" },
   { code: "pt", name: "Português" },
@@ -14,26 +15,49 @@ function App() {
   const [sourceText, setSourceText] = useState(""); // Campo do texto
   const [Isloading, setIsloading] = useState(false); // Loading para a tradução
   const [translatedText, settranslatedText] = useState(""); // Resposta do campo do texto
+  const [error, setError] = useState(""); // Mensagem de Erro.
 
   useEffect(() => {
-    HandleTranslate();
-  }, [sourceText]);
+    // Tempo de resposta para a tradução
+    if (sourceText) {
+      const play = setTimeout(() => {
+        HandleTranslate();
+      }, 500);
+      return () => clearTimeout(play);
+    }
+  }, [sourceLang, sourceText, TargetLang]);
 
   const HandleTranslate = async () => {
     setIsloading(true);
-    const response = await fetch(
-      `https://api.mymemory.translated.net/get?q=${sourceText}&langpair=${sourceLang}|${TargetLang}`
-    );
+    setError("");
 
-    // Verificação de Erro!
-    if (!response.ok) {
-      throw new Error(`HTTP ERROR: ${response.status}`);
+    try {
+      const response = await fetch(
+        `https://api.mymemory.translated.net/get?q=${sourceText}&langpair=${sourceLang}|${TargetLang}`
+      );
+
+      // Verificação de Erro!
+      if (!response.ok) {
+        throw new Error(`HTTP ERROR: ${response.status}`);
+      }
+
+      const data = await response.json();
+      settranslatedText(data.responseData.translatedText);
+    } catch (Erro) {
+      setError(
+        `Erro ao tentar traduzir: ${Erro.message}. Tente novamente mais tarde!`
+      );
+    } finally {
+      setIsloading(false);
     }
+  };
 
-    const data = await response.json();
-    settranslatedText(data.responseData.translatedText);
-
-    setIsloading(false);
+  // Butão de troca
+  const swapTranslate = () => {
+    setSourceLang(TargetLang);
+    setTargetLang(sourceLang);
+    setSourceText(translatedText);
+    settranslatedText(sourceText);
   };
 
   return (
@@ -60,7 +84,10 @@ function App() {
               ))}
             </select>
 
-            <button className="p-2 rounded-full hover:bg-gray-200 outline-none">
+            <button
+              className="p-2 rounded-full hover:bg-gray-200 outline-none"
+              onClick={swapTranslate}
+            >
               <svg
                 className="w-5 h-5 text-headerColor"
                 fill="none"
@@ -101,15 +128,20 @@ function App() {
             </div>
 
             <div className="p-4 relative bg-secondaryBackground border-l border-gray-100 ">
-              <div className="absolute inset-0 flex items-center justify-center">
-                {Isloading ? (
+              {Isloading ? (
+                <div className="absolute inset-0 flex items-center justify-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-800"></div>
-                ) : (
-                  <p className="text-lg text-textColor"> {translatedText} </p>
-                )}
-              </div>
+                </div>
+              ) : (
+                <p className="text-lg text-textColor"> {translatedText} </p>
+              )}
             </div>
           </div>
+          {error && (
+            <div className="p-4 bg-red-100 border-t-orange-400 text-red-700">
+              {error}
+            </div>
+          )}
         </div>
       </main>
 
