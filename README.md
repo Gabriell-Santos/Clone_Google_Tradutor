@@ -1,8 +1,32 @@
-# React + Vite
+# 🌐 Replica Google Tradutor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Clone Google Tradutor](https://github.com/Gabriell-Santos/Clone_Google_Tradutor/blob/master/Clone_Google_Tradutor.png)
 
-Currently, two official plugins are available:
+Um **clone do Google Tradutor** feito com **React**, **Vite** e **Tailwind CSS**. Esse projeto tem como objetivo fornecer uma interface simples e eficiente para tradução de textos entre diferentes idiomas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologias usadas
+
+- **React**: Biblioteca JavaScript para criar interfaces de usuário dinâmicas e reativas.
+- **Vite**: Ferramenta de build para projetos modernos com React.
+- **Tailwind CSS**: Framework CSS utilitário para estilização rápida e eficiente.
+- **gh-pages**: Para deploy do projeto no GitHub Pages.
+
+## 🎨 Funcionalidades
+
+- Traduzir textos entre diversos idiomas como **Inglês**, **Alemão**, **Francês**, **Espanhol**, **Italiano** e **Português**.
+- Interface intuitiva e responsiva, adaptando-se a diferentes tamanhos de tela.
+- Exibição de texto traduzido de forma rápida e eficiente.
+- Exibição de um carregamento enquanto a tradução é realizada.
+
+## 🌍 Idiomas suportados
+
+- **Inglês** 🇺🇸
+- **Alemão** 🇩🇪
+- **Francês** 🇫🇷
+- **Italiano** 🇮🇹
+- **Espanhol** Es
+- **Português** 🇧🇷
+---
+
+Feito com ❤️ por [Gabriell Santos](https://github.com/Gabriell-Santos)
+
