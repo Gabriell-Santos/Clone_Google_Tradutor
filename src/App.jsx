@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const language = [
   { code: "en", name: "Inglês" },
   { code: "de", name: "Alemão" },
-  { code: "es", name: "Espanha" },
+  { code: "es", name: "Espanhol" },
   { code: "fr", name: "Francês" },
   { code: "it", name: "Italiano" },
   { code: "pt", name: "Português" },
@@ -11,29 +11,29 @@ const language = [
 
 function App() {
   const [sourceLang, setSourceLang] = useState("pt"); // Texto de Origem
-  const [TargetLang, setTargetLang] = useState("en"); // Texto para a Tradução
+  const [targetLang, setTargetLang] = useState("en"); // Texto para a Tradução
   const [sourceText, setSourceText] = useState(""); // Campo do texto
-  const [Isloading, setIsloading] = useState(false); // Loading para a tradução
-  const [translatedText, settranslatedText] = useState(""); // Resposta do campo do texto
-  const [error, setError] = useState(""); // Mensagem de Erro.
+  const [isLoading, setIsLoading] = useState(false); // Loading para a tradução
+  const [translatedText, setTranslatedText] = useState(""); // Resposta do campo do texto
+  const [error, setError] = useState(""); // Mensagem de erro
 
   useEffect(() => {
     // Tempo de resposta para a tradução
     if (sourceText) {
       const play = setTimeout(() => {
-        HandleTranslate();
+        handleTranslate();
       }, 500);
       return () => clearTimeout(play);
     }
-  }, [sourceLang, sourceText, TargetLang]);
+  }, [sourceLang, sourceText, targetLang]);
 
-  const HandleTranslate = async () => {
-    setIsloading(true);
+  const handleTranslate = async () => {
+    setIsLoading(true);
     setError("");
 
     try {
       const response = await fetch(
-        `https://api.mymemory.translated.net/get?q=${sourceText}&langpair=${sourceLang}|${TargetLang}`
+        `https://api.mymemory.translated.net/get?q=${sourceText}&langpair=${sourceLang}|${targetLang}`
       );
 
       // Verificação de Erro!
@@ -42,51 +42,51 @@ function App() {
       }
 
       const data = await response.json();
-      settranslatedText(data.responseData.translatedText);
-    } catch (Erro) {
+      setTranslatedText(data.responseData.translatedText);
+    } catch (error) {
       setError(
-        `Erro ao tentar traduzir: ${Erro.message}. Tente novamente mais tarde!`
+        `Erro ao tentar traduzir: ${error.message}. Tente novamente mais tarde!`
       );
     } finally {
-      setIsloading(false);
+      setIsLoading(false);
     }
   };
 
   // Verificação de Idiomas diferentes
   const swapTranslate = () => {
-    if (sourceLang === TargetLang) {
+    if (sourceLang === targetLang) {
       setError(
         "Por favor, para melhor experiência, selecione dois idiomas diferentes."
       );
       return;
     }
-    // Butão de troca 
-    setSourceLang(TargetLang);
+    // Troca os idiomas
+    setSourceLang(targetLang);
     setTargetLang(sourceLang);
     setSourceText(translatedText);
-    settranslatedText(sourceText);
+    setTranslatedText(sourceText);
   };
   // Verificação de Idiomas diferentes
   const handleSourceLangChange = (event) => {
-    const newSourcelang = event.target.value;
-    if (newSourcelang === TargetLang) {
+    const newSourceLang = event.target.value;
+    if (newSourceLang === targetLang) {
       setError(
         "Por favor, para melhor experiência, selecione dois idiomas diferentes."
       );
       return;
     }
-    setSourceLang(newSourcelang);
+    setSourceLang(newSourceLang);
   };
-// Verificação de Idiomas diferentes
+
   const handleTargetLangChange = (event) => {
-    const NewTargetLang = event.target.value;
-    if (NewTargetLang === sourceLang) {
+    const newTargetLang = event.target.value;
+    if (newTargetLang === sourceLang) {
       setError(
         "Por favor, para melhor experiência, selecione dois idiomas diferentes."
       );
       return;
     }
-    setTargetLang(NewTargetLang);
+    setTargetLang(newTargetLang);
   };
 
   return (
@@ -99,11 +99,11 @@ function App() {
         </div>
       </header>
       <main className="flex-grow flex items-start justify-center px-4 py-8 ">
-        <div className="w-full max-w-5xl bg-white rounded-lg shadow-md  overflow-hidden ">
+        <div className="w-full max-w-5xl bg-white rounded-lg shadow-md overflow-hidden ">
           <div className="flex items-center justify-between p-4 border-b border-gray-200 ">
             <select
               value={sourceLang}
-              onChange={(event) => setSourceLang(event.target.value)}
+              onChange={handleSourceLangChange}
               className="text-sm text-textColor bg-transparent border-none focus:outline-none cursor-pointer"
             >
               {language.map((lang) => (
@@ -134,8 +134,8 @@ function App() {
             </button>
 
             <select
-              value={TargetLang}
-              onChange={(event) => setTargetLang(event.target.value)}
+              value={targetLang}
+              onChange={handleTargetLangChange}
               className="text-sm text-textColor bg-transparent border-none focus:outline-none cursor-pointer"
             >
               {language.map((lang) => (
@@ -151,18 +151,18 @@ function App() {
               <textarea
                 value={sourceText}
                 onChange={(event) => setSourceText(event.target.value)}
-                placeholder="Digite seu texto "
+                placeholder="Digite seu texto"
                 className="w-full h-40 text-lg text-textColor bg-transparent resize-none border-none outline-none "
               ></textarea>
             </div>
 
             <div className="p-4 relative bg-secondaryBackground border-l border-gray-100 ">
-              {Isloading ? (
+              {isLoading ? (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-800"></div>
                 </div>
               ) : (
-                <p className="text-lg text-textColor"> {translatedText} </p>
+                <p className="text-lg text-textColor">{translatedText}</p>
               )}
             </div>
           </div>
