@@ -52,12 +52,41 @@ function App() {
     }
   };
 
-  // Butão de troca
+  // Verificação de Idiomas diferentes
   const swapTranslate = () => {
+    if (sourceLang === TargetLang) {
+      setError(
+        "Por favor, para melhor experiência, selecione dois idiomas diferentes."
+      );
+      return;
+    }
+    // Butão de troca 
     setSourceLang(TargetLang);
     setTargetLang(sourceLang);
     setSourceText(translatedText);
     settranslatedText(sourceText);
+  };
+  // Verificação de Idiomas diferentes
+  const handleSourceLangChange = (event) => {
+    const newSourcelang = event.target.value;
+    if (newSourcelang === TargetLang) {
+      setError(
+        "Por favor, para melhor experiência, selecione dois idiomas diferentes."
+      );
+      return;
+    }
+    setSourceLang(newSourcelang);
+  };
+// Verificação de Idiomas diferentes
+  const handleTargetLangChange = (event) => {
+    const NewTargetLang = event.target.value;
+    if (NewTargetLang === sourceLang) {
+      setError(
+        "Por favor, para melhor experiência, selecione dois idiomas diferentes."
+      );
+      return;
+    }
+    setTargetLang(NewTargetLang);
   };
 
   return (
