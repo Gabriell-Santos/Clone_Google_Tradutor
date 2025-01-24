@@ -27,6 +27,4 @@ Um **clone do Google Tradutor** feito com **React**, **Vite** e **Tailwind CSS**
 - **Espanhol** Es
 - **Português** 🇧🇷
 ---
-
-Feito com ❤️ por [Gabriell Santos](https://github.com/Gabriell-Santos)
-
+✍️ Feito com amor por [Gabriell-Santos](https://github.com/Gabriell-Santos) ❤️ 🌐 🖋️
