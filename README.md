@@ -35,7 +35,7 @@ Um **clone do Google Tradutor** feito com **React**, **Vite** e **Tailwind CSS**
 
 ---
 
-## 🛠️ Como Usar
+## 🖥️ Como Usar
 
 Siga as instruções abaixo para clonar e rodar o projeto em sua máquina:
 
