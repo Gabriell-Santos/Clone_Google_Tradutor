@@ -63,3 +63,5 @@ Inicie o servidor local com:
 ```bash
 npm run dev
 ```
+----
+✍️ Feito com amor por [Gabriell-Santos](https://github.com/Gabriell-Santos) ❤️ 🌐 🖋️
